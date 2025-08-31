@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SkyGuard - City AQI Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>SkyGuard: City-Wise Air Quality Index</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>City</th>
+                <th>Current AQI</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for city in city_aqi %}
+            <tr>
+                <td>{{ city.name }}</td>
+                <td>{{ city.aqi }}</td>
+                <td>{{ city.category }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('predict') }}">Go to Prediction Page</a>
+</body>
+</html> 

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SkyGuard - AQI Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+    <h1>SkyGuard: Next-Day AQI Prediction</h1>
+    
+    <form method="post">
+        <label for="city">Select City:</label>
+        <select name="city" id="city">
+            <option value="">Choose a city...</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Bengaluru">Bengaluru</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Kolkata">Kolkata</option>
+        </select>
+        <button type="submit">Predict Next-Day AQI</button>
+    </form>
+
+    {% if error %}
+    <div class="error">
+        <h2>Error</h2>
+        <p>{{ error }}</p>
+    </div>
+    {% endif %}
+
+    {% if prediction %}
+    <div class="result">
+        <h2>Prediction Results for {{ city }}</h2>
+        
+        <div class="aqi-display">
+            <div class="current-aqi">
+                <h3>Current AQI</h3>
+                <div class="aqi-value">{{ current_aqi }}</div>
+            </div>
+            
+            <div class="predicted-aqi">
+                <h3>Predicted Next-Day AQI</h3>
+                <div class="aqi-value">{{ prediction }}</div>
+            </div>
+        </div>
+        
+        <div class="category-info">
+            <h3>Air Quality Category</h3>
+            <p class="category">{{ category }}</p>
+            <p class="advisory">{{ advisory }}</p>
+        </div>
+        
+        <div class="trend-chart">
+            <h3>7-Day AQI Trend</h3>
+            <div id="trend-chart">
+                {% for day in trend %}
+                <div class="trend-day">
+                    <span class="date">{{ day.date }}</span>
+                    <span class="aqi">{{ day.aqi }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <a href="{{ url_for('index') }}">← Back to Home</a>
+</body>
+</html> 
